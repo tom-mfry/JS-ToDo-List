@@ -66,7 +66,7 @@ const deleteTodo = (e) => {
 
 // filter
 function filterTodo(e) {
-  const todos = todoList.childNodes;
+  const todos = [...todoList.children];
   todos.forEach(function (todo) {
     switch (e.target.value) {
       case "all":
