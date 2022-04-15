@@ -42,17 +42,18 @@ const addTodo = (e) => {
   todoInput.value = "";
 };
 
-// completed and trash marker handler
+// completed and trash, marker handler
 const deleteTodo = (e) => {
   e.preventDefault();
   // console.log(e.target);
-  const item = e.target;
+  const target = e.target;
 
   // delete todo
-  if (item.classList.contains("trash-btn")) {
-    const todo = item.parentElement;
+  if (target.classList.contains("trash-btn")) {
+    const todo = target.parentElement;
     // animation
     todo.classList.add("fall");
+    removeLocalTodos(todo);
     // add event listener
     todo.addEventListener("transitionend", () => {
       todo.remove();
@@ -60,8 +61,8 @@ const deleteTodo = (e) => {
   }
 
   // checkmark
-  if (item.classList.contains("complete-btn")) {
-    const todo = item.parentElement;
+  if (target.classList.contains("complete-btn")) {
+    const todo = target.parentElement;
     todo.classList.toggle("completed");
     console.log(todo);
   }
@@ -77,6 +78,13 @@ function filterTodo(e) {
         break;
       case "completed":
         if (todo.classList.contains("completed")) {
+          todo.style.display = "flex";
+        } else {
+          todo.style.display = "none";
+        }
+        break;
+      case "uncompleted":
+        if (todo.classList.contains("uncompleted")) {
           todo.style.display = "flex";
         } else {
           todo.style.display = "none";
@@ -132,7 +140,16 @@ const getTodos = () => {
     todoDiv.appendChild(trashButton);
     // append to list
     todoList.appendChild(todoDiv);
+    console.log(todos);
   });
+};
+
+const removeLocalTodos = (todo) => {
+  let todos = checkLocalTodos();
+  console.log(todos);
+  const todoText = todo.children[0].innerText;
+  todos.splice(todos.indexOf(todoText), 1);
+  localStorage.setItem("todos", JSON.stringify(todos));
 };
 
 // ------------------ event listeners ------------------
