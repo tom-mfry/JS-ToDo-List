@@ -64,7 +64,7 @@ const deleteTodo = (e) => {
   if (target.classList.contains("complete-btn")) {
     const todo = target.parentElement;
     todo.classList.toggle("completed");
-    console.log(todo);
+    todo.classList.toggle("uncompleted");
   }
 };
 
@@ -84,7 +84,7 @@ function filterTodo(e) {
         }
         break;
       case "uncompleted":
-        if (todo.classList.contains("uncompleted")) {
+        if (!todo.classList.contains("completed")) {
           todo.style.display = "flex";
         } else {
           todo.style.display = "none";
